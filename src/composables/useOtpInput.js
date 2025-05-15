@@ -65,7 +65,7 @@ export function useOtpInput(props, emit) {
     const isValid = computed(() => {
         if (!props.content?.required && combinedValue.value === '') return true;
         if (props.content?.required && !isComplete.value) return false;
-        
+
         // Custom validation if enabled
         if (props.content?.customValidation && props.content?.validation) {
             const { resolveFormula } = wwLib.wwFormula?.useFormula() || {};
@@ -74,7 +74,7 @@ export function useOtpInput(props, emit) {
                 return result?.value !== false;
             }
         }
-        
+
         return true;
     });
 
@@ -123,9 +123,10 @@ export function useOtpInput(props, emit) {
         emitChange(newOtpValue);
 
         // Check for completion
+        console.log('isComplete', newValues.every(val => val !== ''), newValues, newOtpValue);
         if (newValues.every(val => val !== '')) {
             emit('trigger-event', { name: 'complete', event: { value: newOtpValue } });
-            
+
             // Auto submit if enabled
             if (props.content?.autoSubmit) {
                 emit('trigger-event', { name: 'submit', event: { value: newOtpValue } });
@@ -160,7 +161,7 @@ export function useOtpInput(props, emit) {
         event.preventDefault();
         const pastedData = event.clipboardData.getData('text');
         const cleanedData = pastedData.replace(/[^a-zA-Z0-9]/g, '');
-        
+
         // Filter based on input type
         let filteredData = cleanedData;
         if (props.content?.type === 'numeric') {
@@ -170,7 +171,7 @@ export function useOtpInput(props, emit) {
         // Split and fill fields
         const chars = filteredData.split('');
         const newValues = [...fieldValues.value];
-        
+
         chars.forEach((char, i) => {
             if (i < formatInfo.value.totalFields) {
                 newValues[i] = char;
@@ -189,7 +190,7 @@ export function useOtpInput(props, emit) {
         // Check for completion
         if (newValues.every(val => val !== '')) {
             emit('trigger-event', { name: 'complete', event: { value: newOtpValue } });
-            
+
             // Auto submit if enabled
             if (props.content?.autoSubmit) {
                 emit('trigger-event', { name: 'submit', event: { value: newOtpValue } });
