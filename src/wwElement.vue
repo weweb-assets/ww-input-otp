@@ -115,12 +115,7 @@ export default {
             const format = props.content?.format || 'xxxxxx';
             let fieldIndex = 0;
 
-            console.log('OTP Debug - format:', format);
-            console.log('OTP Debug - content:', props.content);
-            console.log('OTP Debug - format.length:', format.length);
-
             for (let i = 0; i < format.length; i++) {
-                console.log(`OTP Debug - checking char at ${i}:`, format[i]);
                 if (format[i] === 'x' || format[i] === 'X') {
                     items.push({ type: 'field', position: i, fieldIndex: fieldIndex++ });
                 } else if (props.content?.separatorType !== 'none') {
@@ -128,8 +123,6 @@ export default {
                 }
             }
 
-            console.log('OTP Debug - final renderItems:', items);
-            console.log('OTP Debug - items.length:', items.length);
             return items;
         });
 
