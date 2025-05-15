@@ -1,4 +1,10 @@
 export default {
+    inherit: {
+        type: 'ww-layout',
+    },
+    options: {
+        displayAllowedValues: ['flex', 'grid', 'inline-flex', 'inline-grid'],
+    },
     editor: {
         label: { en: 'OTP Input', fr: 'Entrée OTP' },
         icon: 'input',
