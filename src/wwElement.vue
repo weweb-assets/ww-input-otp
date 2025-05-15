@@ -184,9 +184,6 @@ export default {
 
         // Helper function to get border color
         function getBorderColor(index) {
-            if (!isValid.value) {
-                return props.content?.borderColorError || '#ef4444';
-            }
             if (focusedIndex.value === index) {
                 return props.content?.borderColorFocus || '#3b82f6';
             }

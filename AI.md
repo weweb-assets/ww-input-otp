@@ -31,7 +31,6 @@ Field Styling:
 - `borderWidth`: `string` - The border width of input fields. Default: `'1px'`
 - `borderColor`: `string` - The border color of input fields. Default: `'#cccccc'`
 - `borderColorFocus`: `string` - The border color when a field is focused. Default: `'#3b82f6'`
-- `borderColorError`: `string` - The border color when validation fails. Default: `'#ef4444'`
 - `backgroundColor`: `string` - The background color of input fields. Default: `'#ffffff'`
 
 Text Styling:

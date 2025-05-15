@@ -33,7 +33,6 @@ export default {
                 'borderWidth',
                 'borderColor',
                 'borderColorFocus',
-                'borderColorError',
                 'backgroundColor',
             ],
             [
@@ -384,19 +383,6 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A color value like "#3b82f6"',
-            },
-            /* wwEditor:end */
-        },
-        borderColorError: {
-            label: { en: 'Border color (error)', fr: 'Couleur de bordure (erreur)' },
-            type: 'Color',
-            responsive: true,
-            defaultValue: '#ef4444',
-            bindable: true,
-            /* wwEditor:start */
-            bindingValidation: {
-                type: 'string',
-                tooltip: 'A color value like "#ef4444"',
             },
             /* wwEditor:end */
         },
