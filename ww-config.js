@@ -561,7 +561,7 @@ export default {
             type: 'SystemIcon',
             hidden: content => content.separatorType !== 'icon',
             bindable: true,
-            defaultValue: 'wwi wwi-separator',
+            defaultValue: 'lucide/separator-vertical',
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',

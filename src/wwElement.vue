@@ -92,14 +92,11 @@ export default {
         watch(
             [() => props.content?.separatorIcon, () => props.content?.separatorType],
             async ([icon, type]) => {
-                console.log('OTP Debug - Watch triggered - icon:', icon, 'type:', type);
                 if (icon && type === 'icon') {
                     try {
                         const html = await getIcon(icon);
-                        console.log('OTP Debug - Got icon HTML:', html);
-                        separatorIconHtml.value = html;
+                        separatorIconHtml.value = html || '';
                     } catch (error) {
-                        console.error('OTP Debug - Icon error:', error);
                         separatorIconHtml.value = '';
                     }
                 } else {
@@ -177,11 +174,6 @@ export default {
         }));
 
         const separatorContent = computed(() => {
-            console.log('OTP Debug - separatorType:', props.content?.separatorType);
-            console.log('OTP Debug - separatorChar:', props.content?.separatorChar);
-            console.log('OTP Debug - separatorIcon:', props.content?.separatorIcon);
-            console.log('OTP Debug - separatorIconHtml:', separatorIconHtml.value);
-            
             if (props.content?.separatorType === 'icon') {
                 return separatorIconHtml.value;
             } else if (props.content?.separatorType === 'char') {
