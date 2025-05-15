@@ -558,13 +558,14 @@ export default {
         },
         separatorIcon: {
             label: { en: 'Separator icon', fr: 'Icône de séparateur' },
-            type: 'Icon',
+            type: 'SystemIcon',
             hidden: content => content.separatorType !== 'icon',
             bindable: true,
+            defaultValue: 'wwi wwi-separator',
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
-                tooltip: 'An icon name',
+                tooltip: 'An icon name for the separator',
             },
             /* wwEditor:end */
         },
