@@ -32,7 +32,6 @@
 
 <script>
 import { computed, inject, ref, watch, onMounted, nextTick } from 'vue';
-import { debounce } from 'lodash-es';
 
 export default {
     props: {
@@ -49,8 +48,6 @@ export default {
         // OTP Input state and logic
         const inputRefs = ref([]);
         const focusedIndex = ref(null);
-        const isDebouncing = ref(false);
-        let debounceTimeout = null;
 
         // Parse format to get field positions and separators
         const formatInfo = computed(() => {
@@ -132,11 +129,6 @@ export default {
             return props.content?.type === 'numeric' ? 'numeric' : 'text';
         });
 
-        // Debounce delay
-        const delay = computed(() => {
-            const delayStr = props.content?.debounceDelay || '500ms';
-            return parseInt(delayStr);
-        });
         
         // Form integration
         const useForm = inject('_wwForm:useForm', () => {});
@@ -293,20 +285,9 @@ export default {
             });
         }
 
-        // Emit change event with debounce
+        // Emit change event
         function emitChange(value) {
-            if (props.content?.debounce) {
-                isDebouncing.value = true;
-                if (debounceTimeout) {
-                    clearTimeout(debounceTimeout);
-                }
-                debounceTimeout = setTimeout(() => {
-                    emit('trigger-event', { name: 'change', event: { value } });
-                    isDebouncing.value = false;
-                }, delay.value);
-            } else {
-                emit('trigger-event', { name: 'change', event: { value } });
-            }
+            emit('trigger-event', { name: 'change', event: { value } });
         }
 
         // Public methods

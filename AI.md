@@ -16,8 +16,6 @@ Properties:
 - `required`: `boolean` - Whether the field is required for form validation. Default: `false`
 - `readonly`: `boolean` - Whether the fields are read-only. Default: `false`
 - `disabled`: `boolean` - Whether the fields are disabled. Default: `false`
-- `debounce`: `boolean` - Whether to debounce the change event. Default: `false`
-- `debounceDelay`: `string` - The debounce delay in milliseconds. Default: `'500ms'`
 
 Form Validation:
 - `customValidation`: `boolean` - Enable custom validation formula. Default: `false`
@@ -70,5 +68,5 @@ Triggers:
 
 Example:
 <elements>
-{"uid":0,"tag":"ww-input-otp","props":{"default":{"format":"xxx-xxx","type":"numeric","value":"","fieldName":"otp_code","autoFocus":true,"autoSubmit":false,"required":true,"readonly":false,"disabled":false,"debounce":false,"debounceDelay":"500ms","customValidation":false,"validation":"","gap":"8px","fieldWidth":"40px","fieldHeight":"40px","borderRadius":"4px","borderWidth":"1px","borderColor":"#cccccc","borderColorFocus":"#3b82f6","borderColorError":"#ef4444","backgroundColor":"#ffffff","textAlign":"center","fontSize":"18px","fontWeight":500,"color":"#000000","placeholderChar":"•","placeholderColor":"#999999","maskInput":false,"separatorType":"char","separatorChar":"-","separatorIcon":"","separatorColor":"#000000","separatorSize":"18px"}}}
+{"uid":0,"tag":"ww-input-otp","props":{"default":{"format":"xxx-xxx","type":"numeric","value":"","fieldName":"otp_code","autoFocus":true,"autoSubmit":false,"required":true,"readonly":false,"disabled":false,"customValidation":false,"validation":"","gap":"8px","fieldWidth":"40px","fieldHeight":"40px","borderRadius":"4px","borderWidth":"1px","borderColor":"#cccccc","borderColorFocus":"#3b82f6","borderColorError":"#ef4444","backgroundColor":"#ffffff","textAlign":"center","fontSize":"18px","fontWeight":500,"color":"#000000","placeholderChar":"•","placeholderColor":"#999999","maskInput":false,"separatorType":"char","separatorChar":"-","separatorIcon":"","separatorColor":"#000000","separatorSize":"18px"}}}
 </elements>

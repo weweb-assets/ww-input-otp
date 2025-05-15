@@ -19,8 +19,6 @@ export default {
             'required',
             'readonly',
             'disabled',
-            'debounce',
-            'debounceDelay',
         ],
         customStylePropertiesOrder: [
             [
@@ -244,29 +242,6 @@ export default {
             bindingValidation: {
                 type: 'boolean',
                 tooltip: 'A boolean value',
-            },
-            /* wwEditor:end */
-        },
-        debounce: {
-            label: { en: 'Debounce', fr: 'Debounce' },
-            type: 'OnOff',
-            section: 'settings',
-            defaultValue: false,
-        },
-        debounceDelay: {
-            label: { en: 'Debounce delay', fr: 'Délai de debounce' },
-            type: 'Length',
-            section: 'settings',
-            defaultValue: '500ms',
-            options: {
-                unitChoices: [{ value: 'ms', label: 'ms', min: 0, max: 5000 }],
-            },
-            hidden: content => !content.debounce,
-            bindable: true,
-            /* wwEditor:start */
-            bindingValidation: {
-                type: 'string',
-                tooltip: 'A delay value like "500ms"',
             },
             /* wwEditor:end */
         },
