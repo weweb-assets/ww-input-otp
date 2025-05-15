@@ -189,16 +189,11 @@ export default {
                 emit('trigger-event', { name: 'complete', event: { value: newOtpValue } });
 
                 // Auto submit if enabled
-                if (props.content?.autoSubmit) {
-                    if (submitForm) {
-                        // Submit the form if submitForm function is available
-                        nextTick(() => {
-                            submitForm();
-                        });
-                    } else {
-                        // Emit submit event if form submission is not available
-                        emit('trigger-event', { name: 'submit', event: { value: newOtpValue } });
-                    }
+                if (props.content?.autoSubmit && submitForm) {
+                    // Submit the form directly
+                    nextTick(() => {
+                        submitForm();
+                    });
                 }
             }
         }
@@ -258,16 +253,11 @@ export default {
                 emit('trigger-event', { name: 'complete', event: { value: newOtpValue } });
 
                 // Auto submit if enabled
-                if (props.content?.autoSubmit) {
-                    if (submitForm) {
-                        // Submit the form if submitForm function is available
-                        nextTick(() => {
-                            submitForm();
-                        });
-                    } else {
-                        // Emit submit event if form submission is not available
-                        emit('trigger-event', { name: 'submit', event: { value: newOtpValue } });
-                    }
+                if (props.content?.autoSubmit && submitForm) {
+                    // Submit the form directly
+                    nextTick(() => {
+                        submitForm();
+                    });
                 }
             }
         }

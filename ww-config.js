@@ -64,7 +64,6 @@ export default {
     triggerEvents: [
         { name: 'change', label: { en: 'On change' }, event: { value: '' }, default: true },
         { name: 'complete', label: { en: 'On complete' }, event: { value: '' } },
-        { name: 'submit', label: { en: 'On submit' }, event: { value: '' } },
         { name: 'focus', label: { en: 'On focus' }, event: null },
         { name: 'blur', label: { en: 'On blur' }, event: null },
         { name: 'clear', label: { en: 'On clear' }, event: null },

@@ -64,7 +64,6 @@ Actions:
 Triggers:
 - `change` - Fired when the OTP value changes
 - `complete` - Fired when all fields are filled
-- `submit` - Fired when auto-submit triggers
 - `focus` - Fired when any field gains focus
 - `blur` - Fired when all fields lose focus
 - `clear` - Fired when fields are cleared
