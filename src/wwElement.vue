@@ -199,17 +199,64 @@ export default {
             return props.content?.borderColor || '#cccccc';
         }
 
-        // Expose actions
-        const actions = {
-            focus,
-            clear,
-            setValue,
+        // Register local context
+        const localData = ref({
+            value: combinedValue,
+            isComplete,
+            isValid,
+            isFocused: computed(() => focusedIndex.value !== null),
+        });
+
+        const methods = {
+            focus: {
+                method: focus,
+                editor: {
+                    label: 'Focus',
+                    description: 'Focus the first empty field or first field',
+                },
+            },
+            clear: {
+                method: clear,
+                editor: {
+                    label: 'Clear',
+                    description: 'Clear all OTP fields',
+                },
+            },
+            setValue: {
+                method: setValue,
+                editor: {
+                    label: 'Set Value',
+                    description: 'Set the OTP value programmatically',
+                    args: [
+                        {
+                            name: 'value',
+                            type: 'string',
+                            required: true,
+                        },
+                    ],
+                },
+            },
         };
 
-        // Register actions for WeWeb
-        Object.entries(actions).forEach(([name, method]) => {
-            props.wwElementState.actions[name] = method;
-        });
+        const markdown = `
+### OTP Input Local Data
+
+The OTP input component exposes the following data:
+
+#### value
+The current OTP value without separators
+
+#### isComplete  
+Boolean indicating if all fields are filled
+
+#### isValid
+Boolean indicating if the value passes validation
+
+#### isFocused
+Boolean indicating if any field is currently focused
+`;
+
+        wwLib.wwElement.useRegisterElementLocalContext('otp-input', localData, methods, markdown);
 
         // Mask input display
         const maskInput = computed(() => props.content?.maskInput);
@@ -239,7 +286,21 @@ export default {
             handlePaste,
             handleFocus,
             handleBlur,
+            _focus: focus,
+            _clear: clear,
+            _setValue: setValue,
         };
+    },
+    methods: {
+        focus() {
+            this._focus();
+        },
+        clear() {
+            this._clear();
+        },
+        setValue(value) {
+            this._setValue(value);
+        },
     },
 };
 </script>
