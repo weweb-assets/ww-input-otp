@@ -11,9 +11,9 @@ A customizable One-Time Password (OTP) input component for WeWeb NoCode platform
 - **Customizable Separators**: Use characters or icons as separators
 - **Form Container Integration**: Full support for ww-form-container
 - **Validation Support**: Built-in required validation and custom validation
-- **Auto-submit**: Option to submit when all fields are filled
+- **Auto-submit**: Automatically submit the form when all fields are filled (uses form container's submit method)
 - **Masking**: Option to hide input values
-- **States**: Focus, error, and complete states
+- **States**: Focus, error, complete, readonly, and disabled states
 
 ## Usage
 
