@@ -1,0 +1,15 @@
+{
+  "name": "ww-input-otp",
+  "version": "1.0.0",
+  "description": "WeWeb OTP Input Component with flexible format patterns",
+  "scripts": {
+    "build": "weweb build",
+    "serve": "weweb serve"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  },
+  "devDependencies": {
+    "@weweb/cli": "latest"
+  }
+}
