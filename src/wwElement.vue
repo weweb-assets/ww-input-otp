@@ -17,7 +17,7 @@
         :pattern="inputPattern"
         :maxlength="1"
         :value="fieldValues[item.fieldIndex]"
-        :placeholder="maskInput ? '' : content.placeholderChar"
+        :placeholder="content.placeholderChar"
         :readonly="content.readonly"
         :disabled="content.disabled"
         :class="fieldClasses(item.fieldIndex)"
