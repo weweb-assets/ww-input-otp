@@ -100,22 +100,29 @@ export default {
     const formattedValueComputed = computed(() => {
       const format = props.content?.format || "xxxxxx";
       const value = otpValue.value || "";
+      
+      if (!value) return "";
+      
       let formatted = "";
       let valueIndex = 0;
       
-      for (let i = 0; i < format.length; i++) {
+      for (let i = 0; i < format.length && valueIndex < value.length; i++) {
         if (format[i] === "x" || format[i] === "X") {
-          if (valueIndex < value.length) {
-            formatted += value[valueIndex];
-            valueIndex++;
-          }
-        } else if (props.content?.separatorType !== "none") {
-          // Add separator character
-          if (props.content?.separatorType === "character") {
-            formatted += props.content?.separatorChar || format[i];
-          } else if (props.content?.separatorType === "icon") {
-            // For icon separators, we'll use a placeholder character
-            formatted += format[i];
+          // Add the next character from value
+          formatted += value[valueIndex];
+          valueIndex++;
+          
+          // Check if we should add a separator after this character
+          if (valueIndex < value.length && i + 1 < format.length && format[i + 1] !== "x" && format[i + 1] !== "X" && props.content?.separatorType !== "none") {
+            // Next position in format is a separator and we have more characters to add
+            if (props.content?.separatorType === "character") {
+              formatted += props.content?.separatorChar || format[i + 1];
+            } else if (props.content?.separatorType === "icon") {
+              // For icon separators, use the format character
+              formatted += format[i + 1];
+            }
+            // Skip the separator position in the format
+            i++;
           }
         }
       }
