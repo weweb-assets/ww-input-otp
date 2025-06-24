@@ -95,6 +95,48 @@ export default {
         type: "string",
         defaultValue,
       });
+    
+    // Create formatted value with separators
+    const formattedValueComputed = computed(() => {
+      const format = props.content?.format || "xxxxxx";
+      const value = otpValue.value || "";
+      let formatted = "";
+      let valueIndex = 0;
+      
+      for (let i = 0; i < format.length; i++) {
+        if (format[i] === "x" || format[i] === "X") {
+          if (valueIndex < value.length) {
+            formatted += value[valueIndex];
+            valueIndex++;
+          }
+        } else if (props.content?.separatorType !== "none") {
+          // Add separator character
+          if (props.content?.separatorType === "character") {
+            formatted += props.content?.separatorChar || format[i];
+          } else if (props.content?.separatorType === "icon") {
+            // For icon separators, we'll use a placeholder character
+            formatted += format[i];
+          }
+        }
+      }
+      
+      return formatted;
+    });
+    
+    // Create component variable for formatted value (read-only)
+    const { value: formattedValue, setValue: setFormattedValue } =
+      wwLib.wwVariable.useComponentVariable({
+        uid: props.uid,
+        name: "formattedValue",
+        type: "string",
+        defaultValue: formattedValueComputed,
+        readonly: true,
+      });
+    
+    // Keep formatted value in sync
+    watch(formattedValueComputed, (newValue) => {
+      setFormattedValue(newValue);
+    });
 
     // Update internal value when default changes
     /* wwEditor:start */
@@ -552,6 +594,7 @@ export default {
     // Register local context
     const localData = ref({
       value: combinedValue,
+      formattedValue: formattedValueComputed,
       isComplete,
       isValid,
       isFocused: computed(() => focusedIndex.value !== null),
@@ -595,6 +638,9 @@ The OTP input component exposes the following data:
 
 #### value
 The current OTP value without separators
+
+#### formattedValue
+The OTP value with separators included (e.g., "123-456")
 
 #### isComplete  
 Boolean indicating if all fields are filled
