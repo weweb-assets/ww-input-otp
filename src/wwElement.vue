@@ -12,7 +12,7 @@
       <input
         v-if="item.type === 'field'"
         :ref="(el) => (inputRefs[item.fieldIndex] = el)"
-        type="text"
+        :type="maskInput ? 'password' : 'text'"
         :inputmode="inputMode"
         :pattern="inputPattern"
         :maxlength="1"
@@ -677,10 +677,6 @@ Boolean indicating if any field is currently focused
       line-height: normal;
     }
 
-    &.is-masked {
-      -webkit-text-security: disc;
-      text-security: disc;
-    }
 
     /* Remove spinner buttons */
     &::-webkit-outer-spin-button,
