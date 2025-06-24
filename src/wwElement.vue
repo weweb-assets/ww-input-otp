@@ -306,19 +306,10 @@ export default {
         });
 
         // Auto submit if enabled
-        console.log('Auto-submit check:', {
-          autoSubmit: props.content?.autoSubmit,
-          submitForm: !!submitForm,
-          submitFormType: typeof submitForm,
-        });
-        
         if (props.content?.autoSubmit && submitForm) {
-          console.log('Attempting auto-submit...');
           // Submit the form directly
           nextTick(() => {
-            console.log('Calling submitForm()');
             submitForm();
-            console.log('submitForm() called');
           });
         }
       }
@@ -385,19 +376,10 @@ export default {
         });
 
         // Auto submit if enabled
-        console.log('Auto-submit check:', {
-          autoSubmit: props.content?.autoSubmit,
-          submitForm: !!submitForm,
-          submitFormType: typeof submitForm,
-        });
-        
         if (props.content?.autoSubmit && submitForm) {
-          console.log('Attempting auto-submit...');
           // Submit the form directly
           nextTick(() => {
-            console.log('Calling submitForm()');
             submitForm();
-            console.log('submitForm() called');
           });
         }
       }
