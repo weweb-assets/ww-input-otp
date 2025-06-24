@@ -226,6 +226,9 @@ export default {
       },
     );
 
+    // Track if focus is programmatic
+    let isProgrammaticFocus = false;
+    
     // Handler functions
     function handleInput(index, event) {
       const value = event.target.value;
@@ -387,6 +390,9 @@ export default {
 
     // Focus specific field
     function focusField(index) {
+      // Set flag to prevent focus event trigger
+      isProgrammaticFocus = true;
+      
       nextTick(() => {
         const input = inputRefs.value[index];
         if (input) {
@@ -399,7 +405,15 @@ export default {
     // Handle focus events
     function handleFocus(index) {
       focusedIndex.value = index;
-      emit("trigger-event", { name: "focus" });
+      
+      // Only trigger focus event if it's not programmatic
+      if (!isProgrammaticFocus) {
+        emit("trigger-event", { name: "focus" });
+      } else {
+        // Reset the flag immediately after skipping the trigger
+        isProgrammaticFocus = false;
+      }
+      
       emit("add-state", "focus");
     }
 
