@@ -192,7 +192,49 @@ export default {
         return;
       }
 
-      // Update value
+      // Find the first empty field
+      const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
+      
+      // If current field is not empty and we're typing in a filled field
+      if (fieldValues.value[index] !== "" && firstEmptyIndex !== -1 && firstEmptyIndex !== index) {
+        // Update the first empty field instead
+        const newValues = [...fieldValues.value];
+        newValues[firstEmptyIndex] = char;
+        const newOtpValue = newValues.join("");
+        setOtpValue(newOtpValue);
+        
+        // Clear the current field's display
+        event.target.value = fieldValues.value[index];
+        
+        // Move focus to the next empty field
+        const nextEmptyIndex = newValues.findIndex((val) => val === "");
+        if (nextEmptyIndex !== -1) {
+          focusField(nextEmptyIndex);
+        }
+        
+        // Emit change event
+        emitChange(newOtpValue);
+        
+        // Check for completion
+        if (newValues.every((val) => val !== "")) {
+          emit("trigger-event", {
+            name: "complete",
+            event: { value: newOtpValue },
+          });
+
+          // Auto submit if enabled
+          if (props.content?.autoSubmit && submitForm) {
+            // Submit the form directly
+            nextTick(() => {
+              submitForm();
+            });
+          }
+        }
+        
+        return;
+      }
+
+      // Update value normally
       const newValues = [...fieldValues.value];
       newValues[index] = char;
       const newOtpValue = newValues.join("");
