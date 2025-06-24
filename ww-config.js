@@ -514,6 +514,9 @@ export default {
                 type: 'string',
                 tooltip: 'Either "none", "character", or "icon"',
             },
+            propertyHelp: {
+                tooltip: 'To display separators, include them in the Format field. For example: "xxx-xxx" or "xx xx xx". Any non-x character in the format will be treated as a separator.',
+            },
             /* wwEditor:end */
         },
         separatorChar: {
