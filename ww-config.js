@@ -132,9 +132,6 @@ export default {
                 type: 'boolean',
                 tooltip: 'A boolean formula for validation',
             },
-            propertyHelp: {
-                tooltip: 'Return true if the field is valid, false otherwise',
-            },
             /* wwEditor:end */
         },
         format: {
