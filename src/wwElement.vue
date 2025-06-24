@@ -203,8 +203,8 @@ export default {
         currentFieldValue: fieldValues.value[index]
       });
       
-      // If current field is not empty and we're typing in a filled field
-      if (fieldValues.value[index] !== "" && firstEmptyIndex !== -1 && firstEmptyIndex !== index) {
+      // If we're at the last field or typing in a filled field, and there's an empty field before
+      if (firstEmptyIndex !== -1 && firstEmptyIndex < index) {
         console.log('Redirecting input to first empty field:', firstEmptyIndex);
         
         // Update the first empty field instead
