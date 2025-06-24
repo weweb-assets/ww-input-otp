@@ -503,16 +503,16 @@ export default {
             options: {
                 options: [
                     { value: 'none', label: { en: 'None', fr: 'Aucun' } },
-                    { value: 'char', label: { en: 'Character', fr: 'Caractère' } },
+                    { value: 'character', label: { en: 'Character', fr: 'Caractère' } },
                     { value: 'icon', label: { en: 'Icon', fr: 'Icône' } },
                 ],
             },
-            defaultValue: 'char',
+            defaultValue: 'character',
             bindable: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
-                tooltip: 'Either "none", "char", or "icon"',
+                tooltip: 'Either "none", "character", or "icon"',
             },
             /* wwEditor:end */
         },
@@ -520,7 +520,7 @@ export default {
             label: { en: 'Separator', fr: 'Séparateur' },
             type: 'Text',
             defaultValue: '-',
-            hidden: content => content.separatorType !== 'char',
+            hidden: content => content.separatorType !== 'character',
             bindable: true,
             /* wwEditor:start */
             bindingValidation: {

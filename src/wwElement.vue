@@ -535,7 +535,7 @@ export default {
     const separatorContent = computed(() => {
       if (props.content?.separatorType === "icon") {
         return separatorIconHtml.value;
-      } else if (props.content?.separatorType === "char") {
+      } else if (props.content?.separatorType === "character") {
         return props.content?.separatorChar || "-";
       }
       return "";
