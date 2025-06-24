@@ -464,6 +464,7 @@ export default {
       borderColor: getBorderColor(index),
       backgroundColor: props.content?.backgroundColor || "#ffffff",
       textAlign: props.content?.textAlign || "center",
+      fontFamily: props.content?.fontFamily || "inherit",
       fontSize: props.content?.fontSize || "18px",
       fontWeight: props.content?.fontWeight || 500,
       color: props.content?.color || "#000000",
@@ -624,10 +625,13 @@ Boolean indicating if any field is currently focused
   &__field {
     box-sizing: border-box;
     font-family: inherit;
+    padding: 0;
+    line-height: normal;
 
     &::placeholder {
       color: var(--placeholder-color);
       opacity: 1;
+      line-height: normal;
     }
 
     &.is-masked {
@@ -650,7 +654,7 @@ Boolean indicating if any field is currently focused
     justify-content: center;
     flex-shrink: 0;
 
-    ::v-deep svg {
+    :deep(svg) {
       width: 1em;
       height: 1em;
     }

@@ -35,11 +35,10 @@ export default {
             ],
             [
                 'textAlign',
+                'fontFamily',
                 'fontSize',
                 'fontWeight',
                 'color',
-            ],
-            [
                 'placeholderChar',
                 'placeholderColor',
                 'maskInput',
@@ -124,7 +123,7 @@ export default {
             section: 'settings',
             type: 'Formula',
             defaultValue: '',
-            bindable: true,
+            bindable: false,
             hidden: (content, sidePanelContent) => {
                 return !sidePanelContent.form?.uid || !content.customValidation;
             },
@@ -379,13 +378,27 @@ export default {
             type: 'TextRadioGroup',
             options: {
                 choices: [
-                    { value: 'left', label: 'Left', icon: 'text-align-left' },
-                    { value: 'center', label: 'Center', icon: 'text-align-center' },
-                    { value: 'right', label: 'Right', icon: 'text-align-right' },
+                    { value: 'left', icon: 'align-left' },
+                    { value: 'center', icon: 'align-middle' },
+                    { value: 'right', icon: 'align-right' },
                 ],
             },
             responsive: true,
             defaultValue: 'center',
+        },
+        fontFamily: {
+            label: { en: 'Font family', fr: 'Police' },
+            type: 'FontFamily',
+            responsive: true,
+            states: true,
+            defaultValue: '',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A font family name',
+            },
+            /* wwEditor:end */
         },
         fontSize: {
             label: { en: 'Font size', fr: 'Taille de police' },
