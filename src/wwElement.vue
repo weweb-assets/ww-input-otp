@@ -195,8 +195,18 @@ export default {
       // Find the first empty field
       const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
       
+      console.log('handleInput debug:', {
+        index,
+        char,
+        fieldValues: fieldValues.value,
+        firstEmptyIndex,
+        currentFieldValue: fieldValues.value[index]
+      });
+      
       // If current field is not empty and we're typing in a filled field
       if (fieldValues.value[index] !== "" && firstEmptyIndex !== -1 && firstEmptyIndex !== index) {
+        console.log('Redirecting input to first empty field:', firstEmptyIndex);
+        
         // Update the first empty field instead
         const newValues = [...fieldValues.value];
         newValues[firstEmptyIndex] = char;
@@ -208,7 +218,10 @@ export default {
         
         // Move focus to the next empty field
         const nextEmptyIndex = newValues.findIndex((val) => val === "");
+        console.log('Next empty index after update:', nextEmptyIndex);
+        
         if (nextEmptyIndex !== -1) {
+          console.log('Moving focus to:', nextEmptyIndex);
           focusField(nextEmptyIndex);
         }
         
@@ -337,11 +350,14 @@ export default {
 
     // Focus specific field
     function focusField(index) {
+      console.log('focusField called with index:', index);
       nextTick(() => {
         const input = inputRefs.value[index];
+        console.log('Input ref at index:', index, input);
         if (input) {
           input.focus();
           input.select();
+          console.log('Focus applied to index:', index);
         }
       });
     }
