@@ -404,7 +404,6 @@ export default {
 
     // Handle focus events
     function handleFocus(index) {
-      console.log('[handleFocus] called for index:', index, 'isProgrammatic:', isProgrammaticFocus);
       focusedIndex.value = index;
       
       // Only trigger focus event if it's not programmatic
@@ -420,13 +419,11 @@ export default {
 
     // Handle blur events
     function handleBlur() {
-      console.log('[handleBlur] called');
       // Check if focus moved to another input
       nextTick(() => {
         const stillFocused = inputRefs.value.some(
           (ref) => ref === document.activeElement,
         );
-        console.log('[handleBlur] stillFocused:', stillFocused);
         if (!stillFocused) {
           focusedIndex.value = null;
           emit("trigger-event", { name: "blur" });
@@ -442,15 +439,11 @@ export default {
 
     // Public methods
     function focus() {
-      console.log('[focus] method called');
       const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
       const targetIndex = firstEmptyIndex !== -1 ? firstEmptyIndex : 0;
       
-      console.log('[focus] targetIndex:', targetIndex, 'currentFocusedIndex:', focusedIndex.value);
-      
       // Don't focus if already focused on the target field
       if (focusedIndex.value === targetIndex) {
-        console.log('[focus] Already focused on target field, skipping');
         return;
       }
       
@@ -460,27 +453,20 @@ export default {
     function clear() {
       setOtpValue("");
       emit("trigger-event", { name: "clear", event: { value: "" } });
-      focusField(0);
     }
 
     function setValue(value) {
-      console.log('[setValue] called with:', value);
-      console.log('[setValue] current focusedIndex:', focusedIndex.value);
-      
       const cleanValue = String(value || "").slice(
         0,
         formatInfo.value.totalFields,
       );
       setOtpValue(cleanValue);
       emitChange(cleanValue);
-      
-      console.log('[setValue] after update, focusedIndex:', focusedIndex.value);
     }
 
     // Auto-focus on mount if enabled
     onMounted(() => {
       if (props.content?.autoFocus) {
-        console.log('[AutoFocus] Initial auto-focus triggered on mount');
         nextTick(() => {
           focus();
         });
