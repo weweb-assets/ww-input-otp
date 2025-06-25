@@ -19,7 +19,7 @@
         :value="fieldValues[item.fieldIndex]"
         :placeholder="content.placeholderChar"
         :readonly="content.readonly || isEditing"
-        :disabled="content.disabled"
+        :disabled="content.disabled && !isEditing"
         :class="fieldClasses(item.fieldIndex)"
         :style="fieldStyles(item.fieldIndex)"
         @input="handleInput(item.fieldIndex, $event)"
