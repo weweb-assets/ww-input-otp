@@ -221,11 +221,17 @@ export default {
     const validation = computed(() => props.content?.validation);
     const customValidation = computed(() => props.content?.customValidation);
     const required = computed(() => props.content?.required);
+    
+    // Custom required validation for OTP - checks if all fields are complete
+    const requiredValidation = (value) => {
+      // For OTP, required means all fields must be filled
+      return isComplete.value;
+    };
 
     // Use form integration
     const { submitForm } = useForm(
       combinedValue,
-      { fieldName, validation, customValidation, required },
+      { fieldName, validation, customValidation, required, requiredValidation },
       {
         elementState: props.wwElementState,
         emit,
