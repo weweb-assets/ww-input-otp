@@ -472,14 +472,26 @@ export default {
       emitChange(cleanValue);
     }
 
-    // Auto-focus on mount if enabled
+    // Auto-focus on mount if enabled and not editing
     onMounted(() => {
-      if (props.content?.autoFocus) {
+      if (props.content?.autoFocus && !isEditing.value) {
         nextTick(() => {
           focus();
         });
       }
     });
+    
+    // Watch for editor mode changes to handle auto-focus
+    /* wwEditor:start */
+    watch(isEditing, (newIsEditing, oldIsEditing) => {
+      // When switching from editing to preview/published mode
+      if (oldIsEditing && !newIsEditing && props.content?.autoFocus) {
+        nextTick(() => {
+          focus();
+        });
+      }
+    });
+    /* wwEditor:end */
 
     // State management
     watch(isComplete, (complete) => {
