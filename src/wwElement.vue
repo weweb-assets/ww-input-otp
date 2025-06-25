@@ -440,7 +440,14 @@ export default {
     // Public methods
     function focus() {
       const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
-      focusField(firstEmptyIndex !== -1 ? firstEmptyIndex : 0);
+      const targetIndex = firstEmptyIndex !== -1 ? firstEmptyIndex : 0;
+      
+      // Don't focus if already focused on the target field
+      if (focusedIndex.value === targetIndex) {
+        return;
+      }
+      
+      focusField(targetIndex);
     }
 
     function clear() {
