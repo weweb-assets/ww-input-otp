@@ -18,7 +18,7 @@
         :maxlength="1"
         :value="fieldValues[item.fieldIndex]"
         :placeholder="content.placeholderChar"
-        :readonly="content.readonly"
+        :readonly="content.readonly || isEditing"
         :disabled="content.disabled"
         :class="fieldClasses(item.fieldIndex)"
         :style="fieldStyles(item.fieldIndex)"
@@ -58,6 +58,14 @@ export default {
     "update:sidepanel-content",
   ],
   setup(props, { emit }) {
+    // Check if in editor mode
+    const isEditing = computed(() => {
+      /* wwEditor:start */
+      return props.wwEditorState.editMode === wwLib.wwEditorHelper.EDIT_MODES.EDITION;
+      /* wwEditor:end */
+      return false;
+    });
+    
     // OTP Input state and logic
     const inputRefs = ref([]);
     const focusedIndex = ref(null);
@@ -712,6 +720,7 @@ Boolean indicating if any field is currently focused
       inputPattern,
       inputMode,
       maskInput,
+      isEditing,
       handleInput,
       handleKeydown,
       handlePaste,
