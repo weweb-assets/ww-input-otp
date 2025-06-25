@@ -404,6 +404,7 @@ export default {
 
     // Handle focus events
     function handleFocus(index) {
+      console.log('[handleFocus] called for index:', index, 'isProgrammatic:', isProgrammaticFocus);
       focusedIndex.value = index;
       
       // Only trigger focus event if it's not programmatic
@@ -419,11 +420,13 @@ export default {
 
     // Handle blur events
     function handleBlur() {
+      console.log('[handleBlur] called');
       // Check if focus moved to another input
       nextTick(() => {
         const stillFocused = inputRefs.value.some(
           (ref) => ref === document.activeElement,
         );
+        console.log('[handleBlur] stillFocused:', stillFocused);
         if (!stillFocused) {
           focusedIndex.value = null;
           emit("trigger-event", { name: "blur" });
@@ -457,12 +460,17 @@ export default {
     }
 
     function setValue(value) {
+      console.log('[setValue] called with:', value);
+      console.log('[setValue] current focusedIndex:', focusedIndex.value);
+      
       const cleanValue = String(value || "").slice(
         0,
         formatInfo.value.totalFields,
       );
       setOtpValue(cleanValue);
       emitChange(cleanValue);
+      
+      console.log('[setValue] after update, focusedIndex:', focusedIndex.value);
     }
 
     // Auto-focus on mount if enabled
