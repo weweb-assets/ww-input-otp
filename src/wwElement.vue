@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { computed, inject, ref, watch, nextTick } from "vue";
+import { computed, inject, ref, watch, nextTick, onMounted } from "vue";
 
 export default {
   props: {
@@ -442,11 +442,15 @@ export default {
 
     // Public methods
     function focus() {
+      console.log('[focus] method called');
       const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
       const targetIndex = firstEmptyIndex !== -1 ? firstEmptyIndex : 0;
       
+      console.log('[focus] targetIndex:', targetIndex, 'currentFocusedIndex:', focusedIndex.value);
+      
       // Don't focus if already focused on the target field
       if (focusedIndex.value === targetIndex) {
+        console.log('[focus] Already focused on target field, skipping');
         return;
       }
       
@@ -474,11 +478,14 @@ export default {
     }
 
     // Auto-focus on mount if enabled
-    if (props.content?.autoFocus) {
-      nextTick(() => {
-        focus();
-      });
-    }
+    onMounted(() => {
+      if (props.content?.autoFocus) {
+        console.log('[AutoFocus] Initial auto-focus triggered on mount');
+        nextTick(() => {
+          focus();
+        });
+      }
+    });
 
     // State management
     watch(isComplete, (complete) => {
