@@ -12,12 +12,12 @@
       <input
         v-if="item.type === 'field'"
         :ref="(el) => (inputRefs[item.fieldIndex] = el)"
-        :type="maskInput ? 'password' : 'text'"
+        type="text"
         :inputmode="inputMode"
         :pattern="inputPattern"
         :maxlength="1"
-        :value="fieldValues[item.fieldIndex]"
-        :placeholder="content.placeholderChar"
+        :value="displayValues[item.fieldIndex]"
+        :placeholder="shouldShowPlaceholder ? content.placeholderChar : ''"
         :readonly="content.readonly || isEditing"
         :disabled="content.disabled && !isEditing"
         :required="content.required && !isEditing"
@@ -70,6 +70,7 @@ export default {
     // OTP Input state and logic
     const inputRefs = ref([]);
     const focusedIndex = ref(null);
+    const actualValues = ref([]);
 
     // Parse format to get field positions and separators
     const formatInfo = computed(() => {
@@ -166,6 +167,34 @@ export default {
       const value = otpValue.value || "";
       return formatInfo.value.fields.map((field) => value[field.index] || "");
     });
+    
+    // Keep track of actual values for masking
+    watch(fieldValues, (newValues) => {
+      actualValues.value = [...newValues];
+    }, { immediate: true });
+    
+    // Compute display values based on masking settings
+    const displayValues = computed(() => {
+      if (!props.content?.maskInput) {
+        return fieldValues.value;
+      }
+      
+      // Use custom mask character if provided, otherwise use default
+      const maskChar = props.content?.maskCharacter || '•';
+      
+      return fieldValues.value.map((value, index) => {
+        // Don't mask the field that's currently being typed
+        if (focusedIndex.value === index && value === '') {
+          return '';
+        }
+        return value ? maskChar : '';
+      });
+    });
+    
+    // Determine if placeholder should be shown
+    const shouldShowPlaceholder = computed(() => {
+      return props.content?.displayPlaceholder !== false;
+    });
 
     // Combined value without separators
     const combinedValue = computed(() => fieldValues.value.join(""));
@@ -246,16 +275,27 @@ export default {
     
     // Handler functions
     function handleInput(index, event) {
-      const value = event.target.value;
-      const char = value.slice(-1); // Get last character
+      const inputValue = event.target.value;
+      
+      // For masked input, we need to handle the input differently
+      if (props.content?.maskInput) {
+        // If it's a mask character, ignore it
+        const maskChar = props.content?.maskCharacter || '•';
+        if (inputValue === maskChar) {
+          event.target.value = displayValues.value[index];
+          return;
+        }
+      }
+      
+      const char = inputValue.slice(-1); // Get last character
 
       // Validate input based on type
       if (props.content?.type === "numeric" && !/[0-9]/.test(char)) {
-        event.target.value = fieldValues.value[index];
+        event.target.value = displayValues.value[index];
         return;
       }
       if (props.content?.type === "alphanumeric" && !/[a-zA-Z0-9]/.test(char)) {
-        event.target.value = fieldValues.value[index];
+        event.target.value = displayValues.value[index];
         return;
       }
 
@@ -271,7 +311,7 @@ export default {
         setOtpValue(newOtpValue);
         
         // Clear the current field's display
-        event.target.value = fieldValues.value[index];
+        event.target.value = displayValues.value[index];
         
         // Move focus to the next empty field
         const nextEmptyIndex = newValues.findIndex((val) => val === "");
@@ -608,7 +648,7 @@ export default {
       fontFamily: props.content?.fontFamily || "inherit",
       fontSize: props.content?.fontSize || "18px",
       fontWeight: props.content?.fontWeight || 500,
-      color: props.content?.color || "#000000",
+      color: getMaskColor(index),
       outline: "none",
       transition: "border-color 0.2s",
       "--placeholder-color": props.content?.placeholderColor || "#999999",
@@ -645,6 +685,14 @@ export default {
         return props.content?.borderColorFocus || "#3b82f6";
       }
       return props.content?.borderColor || "#cccccc";
+    }
+    
+    // Helper function to get text color based on masking
+    function getMaskColor(index) {
+      if (props.content?.maskInput && fieldValues.value[index]) {
+        return props.content?.maskColor || props.content?.color || "#000000";
+      }
+      return props.content?.color || "#000000";
     }
 
     // Register local context
@@ -729,6 +777,7 @@ Boolean indicating if any field is currently focused
       rootElement,
       formatInfo,
       fieldValues,
+      displayValues,
       renderItems,
       rootStyles,
       rootClasses,
@@ -740,6 +789,7 @@ Boolean indicating if any field is currently focused
       inputMode,
       maskInput,
       isEditing,
+      shouldShowPlaceholder,
       handleInput,
       handleKeydown,
       handlePaste,

@@ -39,9 +39,12 @@ export default {
                 'fontSize',
                 'fontWeight',
                 'color',
+                'displayPlaceholder',
                 'placeholderChar',
                 'placeholderColor',
                 'maskInput',
+                'maskCharacter',
+                'maskColor',
             ],
             [
                 'separatorType',
@@ -461,6 +464,7 @@ export default {
             label: { en: 'Placeholder', fr: 'Caractère de remplacement' },
             type: 'Text',
             defaultValue: '•',
+            hidden: content => !content.displayPlaceholder,
             bindable: true,
             /* wwEditor:start */
             bindingValidation: {
@@ -474,6 +478,7 @@ export default {
             type: 'Color',
             responsive: true,
             defaultValue: '#999999',
+            hidden: content => !content.displayPlaceholder,
             bindable: true,
             /* wwEditor:start */
             bindingValidation: {
@@ -491,6 +496,45 @@ export default {
             bindingValidation: {
                 type: 'boolean',
                 tooltip: 'A boolean value',
+            },
+            /* wwEditor:end */
+        },
+        maskCharacter: {
+            label: { en: 'Mask character', fr: 'Caractère de masquage' },
+            type: 'Text',
+            defaultValue: '•',
+            hidden: content => !content.maskInput,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A single character like "•"',
+            },
+            /* wwEditor:end */
+        },
+        maskColor: {
+            label: { en: 'Mask color', fr: 'Couleur du masquage' },
+            type: 'Color',
+            responsive: true,
+            defaultValue: '#000000',
+            hidden: content => !content.maskInput,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#000000"',
+            },
+            /* wwEditor:end */
+        },
+        displayPlaceholder: {
+            label: { en: 'Display placeholder', fr: 'Afficher le placeholder' },
+            type: 'OnOff',
+            defaultValue: true,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'Whether to show placeholder in empty fields',
             },
             /* wwEditor:end */
         },
