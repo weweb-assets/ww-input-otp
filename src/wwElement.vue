@@ -20,6 +20,7 @@
         :placeholder="content.placeholderChar"
         :readonly="content.readonly || isEditing"
         :disabled="content.disabled && !isEditing"
+        :required="content.required && !isEditing"
         :class="fieldClasses(item.fieldIndex)"
         :style="fieldStyles(item.fieldIndex)"
         @input="handleInput(item.fieldIndex, $event)"
