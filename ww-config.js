@@ -463,7 +463,7 @@ export default {
         placeholderChar: {
             label: { en: 'Placeholder', fr: 'Caractère de remplacement' },
             type: 'Text',
-            defaultValue: '•',
+            defaultValue: '·',
             hidden: content => !content.displayPlaceholder,
             bindable: true,
             /* wwEditor:start */
@@ -502,7 +502,7 @@ export default {
         maskCharacter: {
             label: { en: 'Mask character', fr: 'Caractère de masquage' },
             type: 'Text',
-            defaultValue: '•',
+            defaultValue: '·',
             hidden: content => !content.maskInput,
             bindable: true,
             /* wwEditor:start */

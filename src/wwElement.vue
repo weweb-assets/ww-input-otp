@@ -180,7 +180,7 @@ export default {
       }
       
       // Use custom mask character if provided, otherwise use default
-      const maskChar = props.content?.maskCharacter || '•';
+      const maskChar = props.content?.maskCharacter || '·';
       
       return fieldValues.value.map((value, index) => {
         // Don't mask the field that's currently being typed
@@ -280,7 +280,7 @@ export default {
       // For masked input, we need to handle the input differently
       if (props.content?.maskInput) {
         // If it's a mask character, ignore it
-        const maskChar = props.content?.maskCharacter || '•';
+        const maskChar = props.content?.maskCharacter || '·';
         if (inputValue === maskChar) {
           event.target.value = displayValues.value[index];
           return;
