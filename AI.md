@@ -37,14 +37,17 @@ Text Styling:
 - `fontSize`: `string` - The font size of input text. Default: `'18px'`
 - `fontWeight`: `number | null` - The font weight of input text. Default: `500`
 - `color`: `string` - The text color in input fields. Default: `'#000000'`
-- `placeholderChar`: `string` - The placeholder character shown in empty fields. Default: `'•'`
+- `displayPlaceholder`: `boolean` - Whether to show placeholder in empty fields. Default: `true`
+- `placeholderChar`: `string` - The placeholder character shown in empty fields. Default: `'·'`
 - `placeholderColor`: `string` - The color of placeholder characters. Default: `'#999999'`
-- `maskInput`: `boolean` - Whether to mask the input values (uses native password field). Default: `false`
+- `maskInput`: `boolean` - Whether to mask the input values. Default: `false`
+- `maskCharacter`: `string` - The character to display when input is masked. Default: `'·'`
+- `maskColor`: `string` - The color of masked characters. Default: `'#000000'`
 
 Separator Styling:
 - `separatorType`: `'none' | 'character' | 'icon'` - The type of separator between field groups. Default: `'character'`
 - `separatorChar`: `string` - The character to use as separator (when type is 'character'). Default: `'-'`
-- `separatorIcon`: `string` - The icon name to use as separator (when type is 'icon'). Default: `''`
+- `separatorIcon`: `string` - The icon name to use as separator (when type is 'icon'). Default: `'lucide/separator-vertical'`
 - `separatorColor`: `string` - The color of separators. Default: `'#000000'`
 - `separatorSize`: `string` - The size of separators. Default: `'18px'`
 
@@ -73,5 +76,5 @@ Component Variables:
 
 Example:
 <elements>
-{"uid":0,"tag":"ww-input-otp","props":{"default":{"format":"xxx-xxx","type":"numeric","value":"","fieldName":"otp_code","autoFocus":true,"autoSubmit":false,"required":true,"readonly":false,"disabled":false,"customValidation":false,"validation":"","gap":"8px","fieldWidth":"40px","fieldHeight":"40px","borderRadius":"4px","borderWidth":"1px","borderColor":"#cccccc","borderColorFocus":"#3b82f6","backgroundColor":"#ffffff","textAlign":"center","fontFamily":"","fontSize":"18px","fontWeight":500,"color":"#000000","placeholderChar":"•","placeholderColor":"#999999","maskInput":false,"separatorType":"character","separatorChar":"-","separatorIcon":"","separatorColor":"#000000","separatorSize":"18px"}}}
+{"uid":0,"tag":"ww-input-otp","props":{"default":{"format":"xxx-xxx","type":"numeric","value":"","fieldName":"otp_code","autoFocus":true,"autoSubmit":false,"required":true,"readonly":false,"disabled":false,"customValidation":false,"validation":"","gap":"8px","fieldWidth":"40px","fieldHeight":"40px","borderRadius":"4px","borderWidth":"1px","borderColor":"#cccccc","borderColorFocus":"#3b82f6","backgroundColor":"#ffffff","textAlign":"center","fontFamily":"","fontSize":"18px","fontWeight":500,"color":"#000000","displayPlaceholder":true,"placeholderChar":"·","placeholderColor":"#999999","maskInput":false,"maskCharacter":"·","maskColor":"#000000","separatorType":"character","separatorChar":"-","separatorIcon":"lucide/separator-vertical","separatorColor":"#000000","separatorSize":"18px"}}}
 </elements>
