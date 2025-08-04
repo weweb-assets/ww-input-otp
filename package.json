@@ -6,9 +6,6 @@
     "build": "weweb build",
     "serve": "weweb serve"
   },
-  "dependencies": {
-    "lodash-es": "^4.17.21"
-  },
   "devDependencies": {
     "@weweb/cli": "latest"
   }

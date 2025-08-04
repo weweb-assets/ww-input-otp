@@ -33,8 +33,10 @@
         v-else-if="item.type === 'separator'"
         class="ww-input-otp__separator"
         :style="separatorStyles"
-        v-html="separatorContent"
-      />
+      >
+        <span v-if="content.separatorType === 'character'">{{ separatorContent }}</span>
+        <span v-else-if="content.separatorType === 'icon'" v-html="separatorContent"></span>
+      </div>
     </template>
   </div>
 </template>
@@ -765,12 +767,6 @@ Boolean indicating if any field is currently focused
 
     // Mask input display
     const maskInput = computed(() => props.content?.maskInput);
-
-    // Watch for masked input changes
-    watch(maskInput, (masked) => {
-      // Force re-render by toggling a key
-      // This ensures proper placeholder/value display
-    });
 
     return {
       inputRefs,
