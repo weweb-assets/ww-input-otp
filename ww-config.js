@@ -251,6 +251,7 @@ export default {
                 unitChoices: [{ value: 'px', label: 'px', min: 0, max: 50 }],
             },
             responsive: true,
+            states: true,
             defaultValue: '8px',
             bindable: true,
             /* wwEditor:start */
@@ -270,6 +271,7 @@ export default {
                 ],
             },
             responsive: true,
+            states: true,
             defaultValue: '40px',
             bindable: true,
             /* wwEditor:start */
@@ -289,6 +291,7 @@ export default {
                 ],
             },
             responsive: true,
+            states: true,
             defaultValue: '40px',
             bindable: true,
             /* wwEditor:start */
@@ -350,6 +353,7 @@ export default {
             label: { en: 'Border color (focus)', fr: 'Couleur de bordure (focus)' },
             type: 'Color',
             responsive: true,
+            states: true,
             defaultValue: '#3b82f6',
             bindable: true,
             /* wwEditor:start */
@@ -384,6 +388,7 @@ export default {
                 ],
             },
             responsive: true,
+            states: true,
             defaultValue: 'center',
         },
         fontFamily: {
@@ -437,6 +442,8 @@ export default {
                     { value: 900, label: '900 - Black' },
                 ],
             },
+            responsive: true,
+            states: true,
             defaultValue: 500,
             bindable: true,
             /* wwEditor:start */
@@ -477,6 +484,7 @@ export default {
             label: { en: 'Placeholder color', fr: 'Couleur du placeholder' },
             type: 'Color',
             responsive: true,
+            states: true,
             defaultValue: '#999999',
             hidden: content => !content.displayPlaceholder,
             bindable: true,
@@ -516,6 +524,7 @@ export default {
             label: { en: 'Mask color', fr: 'Couleur du masquage' },
             type: 'Color',
             responsive: true,
+            states: true,
             defaultValue: '#000000',
             hidden: content => !content.maskInput,
             bindable: true,
@@ -590,6 +599,7 @@ export default {
             label: { en: 'Separator color', fr: 'Couleur du séparateur' },
             type: 'Color',
             responsive: true,
+            states: true,
             defaultValue: '#000000',
             hidden: content => content.separatorType === 'none',
             bindable: true,
@@ -610,6 +620,7 @@ export default {
                 ],
             },
             responsive: true,
+            states: true,
             defaultValue: '18px',
             hidden: content => content.separatorType === 'none',
             bindable: true,
