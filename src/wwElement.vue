@@ -14,7 +14,7 @@
         :ref="(el) => (inputRefs[item.fieldIndex] = el)"
         type="text"
         :inputmode="inputMode"
-        :pattern="inputPattern"
+        :pattern="content.maskInput ? undefined : inputPattern"
         :maxlength="1"
         :value="displayValues[item.fieldIndex]"
         :placeholder="shouldShowPlaceholder ? content.placeholderChar : ''"
