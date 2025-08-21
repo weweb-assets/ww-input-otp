@@ -252,6 +252,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '8px',
             bindable: true,
             /* wwEditor:start */
@@ -272,6 +273,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '40px',
             bindable: true,
             /* wwEditor:start */
@@ -292,6 +294,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '40px',
             bindable: true,
             /* wwEditor:start */
@@ -309,6 +312,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '4px',
             bindable: true,
             /* wwEditor:start */
@@ -326,6 +330,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '1px',
             bindable: true,
             /* wwEditor:start */
@@ -340,6 +345,7 @@ export default {
             type: 'Color',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '#cccccc',
             bindable: true,
             /* wwEditor:start */
@@ -354,6 +360,7 @@ export default {
             type: 'Color',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '#3b82f6',
             bindable: true,
             /* wwEditor:start */
@@ -368,6 +375,7 @@ export default {
             type: 'Color',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '#ffffff',
             bindable: true,
             /* wwEditor:start */
@@ -389,6 +397,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: 'center',
         },
         fontFamily: {
@@ -396,6 +405,7 @@ export default {
             type: 'FontFamily',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '',
             bindable: true,
             /* wwEditor:start */
@@ -416,6 +426,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '18px',
             bindable: true,
             /* wwEditor:start */
@@ -444,6 +455,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: 500,
             bindable: true,
             /* wwEditor:start */
@@ -458,6 +470,7 @@ export default {
             type: 'Color',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '#000000',
             bindable: true,
             /* wwEditor:start */
@@ -473,6 +486,7 @@ export default {
             defaultValue: '·',
             hidden: content => !content.displayPlaceholder,
             bindable: true,
+            classes: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
@@ -485,6 +499,7 @@ export default {
             type: 'Color',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '#999999',
             hidden: content => !content.displayPlaceholder,
             bindable: true,
@@ -513,6 +528,7 @@ export default {
             defaultValue: '·',
             hidden: content => !content.maskInput,
             bindable: true,
+            classes: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
@@ -525,6 +541,7 @@ export default {
             type: 'Color',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '#000000',
             hidden: content => !content.maskInput,
             bindable: true,
@@ -575,6 +592,7 @@ export default {
             defaultValue: '-',
             hidden: content => content.separatorType !== 'character',
             bindable: true,
+            classes: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
@@ -588,6 +606,7 @@ export default {
             hidden: content => content.separatorType !== 'icon',
             bindable: true,
             defaultValue: 'lucide/separator-vertical',
+            classes: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
@@ -600,6 +619,7 @@ export default {
             type: 'Color',
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '#000000',
             hidden: content => content.separatorType === 'none',
             bindable: true,
@@ -621,6 +641,7 @@ export default {
             },
             responsive: true,
             states: true,
+            classes: true,
             defaultValue: '18px',
             hidden: content => content.separatorType === 'none',
             bindable: true,
