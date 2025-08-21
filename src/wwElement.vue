@@ -461,6 +461,15 @@ export default {
 
     // Handle focus events
     function handleFocus(index) {
+      // Find the first empty field
+      const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
+      
+      // If there's an empty field and it's not the current field, redirect focus
+      if (firstEmptyIndex !== -1 && firstEmptyIndex !== index && !isProgrammaticFocus) {
+        focusField(firstEmptyIndex);
+        return;
+      }
+      
       focusedIndex.value = index;
       
       // Only trigger focus event if it's not programmatic
