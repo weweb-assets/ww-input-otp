@@ -566,7 +566,7 @@ export default {
       } else {
         emit("remove-state", "error");
       }
-    });
+    }, { immediate: true });
 
     watch(
       () => props.content?.readonly,
