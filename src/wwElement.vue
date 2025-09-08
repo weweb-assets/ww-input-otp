@@ -859,7 +859,6 @@ Boolean indicating if any field is currently focused
 
   /* States */
   &.is-disabled {
-    opacity: 0.6;
     pointer-events: none;
   }
 
