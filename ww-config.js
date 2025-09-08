@@ -515,6 +515,7 @@ export default {
             type: 'OnOff',
             defaultValue: false,
             bindable: true,
+            classes: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'boolean',
@@ -557,6 +558,7 @@ export default {
             type: 'OnOff',
             defaultValue: true,
             bindable: true,
+            classes: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'boolean',
@@ -576,6 +578,7 @@ export default {
             },
             defaultValue: 'character',
             bindable: true,
+            classes: true,
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
