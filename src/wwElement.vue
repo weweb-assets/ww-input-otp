@@ -378,17 +378,34 @@ export default {
     // Handle backspace
     function handleKeydown(index, event) {
       if (event.key === "Backspace") {
-        if (!fieldValues.value[index] && index > 0) {
-          // Move to previous field if current is empty
-          focusField(index - 1);
-          event.preventDefault();
-        } else if (fieldValues.value[index]) {
+        const hasValue = !!fieldValues.value[index];
+
+        if (hasValue) {
           // Clear current field
           const newValues = [...fieldValues.value];
           newValues[index] = "";
           const newOtpValue = newValues.join("");
           setOtpValue(newOtpValue);
           emitChange(newOtpValue);
+          // Let focus stay on current field
+          return;
+        }
+
+        // Current field is empty: delete the nearest previous non-empty field
+        let prevIndex = index - 1;
+        while (prevIndex >= 0 && !fieldValues.value[prevIndex]) {
+          prevIndex--;
+        }
+
+        if (prevIndex >= 0) {
+          const newValues = [...fieldValues.value];
+          newValues[prevIndex] = "";
+          const newOtpValue = newValues.join("");
+          setOtpValue(newOtpValue);
+          emitChange(newOtpValue);
+          // Focus the field we just cleared
+          focusField(prevIndex);
+          event.preventDefault();
         }
       }
     }
