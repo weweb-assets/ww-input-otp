@@ -150,7 +150,7 @@ export default {
                 tooltip: 'A format string like "xx-xx-xx" where x represents input fields',
             },
             propertyHelp: {
-                tooltip: 'Define the OTP pattern. Use "x" for input fields and any other character as separator. Examples: "xxxxxx", "xxx-xxx", "xx xx xx"',
+                tooltip: 'Define the OTP pattern. Use "x" for input fields and any other character as a separator. Examples: "xxxxxx", "xxx-xxx", "xx xx xx"',
             },
             /* wwEditor:end */
         },
@@ -165,6 +165,11 @@ export default {
                 ],
             },
             defaultValue: 'numeric',
+            /* wwEditor:start */
+            propertyHelp: {
+                tooltip: 'Define the accepted character types',
+            },
+            /* wwEditor:end */
         },
         value: {
             label: { en: 'Init value', fr: 'Valeur initiale' },
@@ -176,6 +181,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A string value like "123456"',
+            },
+            propertyHelp: {
+                tooltip: 'Initial value for the slots (trimmed to the number of x in Format)',
             },
             /* wwEditor:end */
         },
@@ -190,6 +198,9 @@ export default {
                 type: 'boolean',
                 tooltip: 'A boolean value',
             },
+            propertyHelp: {
+                tooltip: 'Focuses the first empty slot on load',
+            },
             /* wwEditor:end */
         },
         autoSubmit: {
@@ -202,6 +213,9 @@ export default {
             bindingValidation: {
                 type: 'boolean',
                 tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Submits the form automatically when all slots are filled (if inside Form Container)',
             },
             /* wwEditor:end */
         },
@@ -216,6 +230,9 @@ export default {
                 type: 'boolean',
                 tooltip: 'A boolean value',
             },
+            propertyHelp: {
+                tooltip: 'Requires all slots to be filled (if inside Form Container)',
+            },
             /* wwEditor:end */
         },
         readonly: {
@@ -229,6 +246,9 @@ export default {
                 type: 'boolean',
                 tooltip: 'A boolean value',
             },
+            propertyHelp: {
+                tooltip: 'Prevents editing the fields',
+            },
             /* wwEditor:end */
         },
         disabled: {
@@ -241,6 +261,9 @@ export default {
             bindingValidation: {
                 type: 'boolean',
                 tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Disables the fields',
             },
             /* wwEditor:end */
         },
@@ -259,6 +282,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A length value like "8px"',
+            },
+            propertyHelp: {
+                tooltip: 'Space between fields and separators',
             },
             /* wwEditor:end */
         },
@@ -281,6 +307,9 @@ export default {
                 type: 'string',
                 tooltip: 'A length value like "40px"',
             },
+            propertyHelp: {
+                tooltip: 'Width of each field',
+            },
             /* wwEditor:end */
         },
         fieldHeight: {
@@ -302,6 +331,9 @@ export default {
                 type: 'string',
                 tooltip: 'A length value like "40px"',
             },
+            propertyHelp: {
+                tooltip: 'Height of each field',
+            },
             /* wwEditor:end */
         },
         borderRadius: {
@@ -319,6 +351,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A length value like "4px"',
+            },
+            propertyHelp: {
+                tooltip: 'Corner roundness of fields',
             },
             /* wwEditor:end */
         },
@@ -338,6 +373,9 @@ export default {
                 type: 'string',
                 tooltip: 'A length value like "1px"',
             },
+            propertyHelp: {
+                tooltip: 'Border thickness of fields',
+            },
             /* wwEditor:end */
         },
         borderColor: {
@@ -352,6 +390,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A color value like "#cccccc"',
+            },
+            propertyHelp: {
+                tooltip: 'Default border color of fields',
             },
             /* wwEditor:end */
         },
@@ -368,6 +409,9 @@ export default {
                 type: 'string',
                 tooltip: 'A color value like "#3b82f6"',
             },
+            propertyHelp: {
+                tooltip: 'Border color when a field is focused',
+            },
             /* wwEditor:end */
         },
         backgroundColor: {
@@ -382,6 +426,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A color value like "#ffffff"',
+            },
+            propertyHelp: {
+                tooltip: 'Background color of fields',
             },
             /* wwEditor:end */
         },
@@ -399,6 +446,11 @@ export default {
             states: true,
             classes: true,
             defaultValue: 'center',
+            /* wwEditor:start */
+            propertyHelp: {
+                tooltip: 'Alignment of characters inside fields',
+            },
+            /* wwEditor:end */
         },
         fontFamily: {
             label: { en: 'Font family', fr: 'Police' },
@@ -412,6 +464,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A font family name',
+            },
+            propertyHelp: {
+                tooltip: 'Font for field text',
             },
             /* wwEditor:end */
         },
@@ -433,6 +488,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A length value like "18px"',
+            },
+            propertyHelp: {
+                tooltip: 'Size of field text',
             },
             /* wwEditor:end */
         },
@@ -463,6 +521,9 @@ export default {
                 type: 'number',
                 tooltip: 'A number between 100 and 900',
             },
+            propertyHelp: {
+                tooltip: 'Weight of field text',
+            },
             /* wwEditor:end */
         },
         color: {
@@ -478,6 +539,9 @@ export default {
                 type: 'string',
                 tooltip: 'A color value like "#000000"',
             },
+            propertyHelp: {
+                tooltip: 'Color of field text',
+            },
             /* wwEditor:end */
         },
         placeholderChar: {
@@ -491,6 +555,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A single character like "•"',
+            },
+            propertyHelp: {
+                tooltip: 'Placeholder character shown in empty fields',
             },
             /* wwEditor:end */
         },
@@ -508,6 +575,9 @@ export default {
                 type: 'string',
                 tooltip: 'A color value like "#999999"',
             },
+            propertyHelp: {
+                tooltip: 'Color of placeholder characters',
+            },
             /* wwEditor:end */
         },
         maskInput: {
@@ -520,6 +590,9 @@ export default {
             bindingValidation: {
                 type: 'boolean',
                 tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Hides entered characters using a mask',
             },
             /* wwEditor:end */
         },
@@ -534,6 +607,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A single character like "•"',
+            },
+            propertyHelp: {
+                tooltip: 'Character used for masking',
             },
             /* wwEditor:end */
         },
@@ -551,6 +627,9 @@ export default {
                 type: 'string',
                 tooltip: 'A color value like "#000000"',
             },
+            propertyHelp: {
+                tooltip: 'Color of masked characters',
+            },
             /* wwEditor:end */
         },
         displayPlaceholder: {
@@ -563,6 +642,9 @@ export default {
             bindingValidation: {
                 type: 'boolean',
                 tooltip: 'Whether to show placeholder in empty fields',
+            },
+            propertyHelp: {
+                tooltip: 'Shows placeholder characters in empty fields',
             },
             /* wwEditor:end */
         },
@@ -585,7 +667,7 @@ export default {
                 tooltip: 'Either "none", "character", or "icon"',
             },
             propertyHelp: {
-                tooltip: 'To display separators, include them in the Format field. For example: "xxx-xxx" or "xx xx xx". Any non-x character in the format will be treated as a separator.',
+                tooltip: 'Type of separator between groups',
             },
             /* wwEditor:end */
         },
@@ -601,6 +683,9 @@ export default {
                 type: 'string',
                 tooltip: 'A separator character like "-"',
             },
+            propertyHelp: {
+                tooltip: 'Separator character used when Separator type is character',
+            },
             /* wwEditor:end */
         },
         separatorIcon: {
@@ -614,6 +699,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'An icon name for the separator',
+            },
+            propertyHelp: {
+                tooltip: 'Icon used when the Separator type is icon',
             },
             /* wwEditor:end */
         },
@@ -630,6 +718,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A color value like "#000000"',
+            },
+            propertyHelp: {
+                tooltip: 'Color of separators',
             },
             /* wwEditor:end */
         },
@@ -652,6 +743,9 @@ export default {
             bindingValidation: {
                 type: 'string',
                 tooltip: 'A length value like "18px"',
+            },
+            propertyHelp: {
+                tooltip: 'Size of separators',
             },
             /* wwEditor:end */
         },
