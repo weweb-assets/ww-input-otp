@@ -1,0 +1,753 @@
+export default {
+    inherit: {
+        type: 'ww-layout',
+    },
+    options: {
+        displayAllowedValues: ['flex', 'grid', 'inline-flex', 'inline-grid'],
+    },
+    editor: {
+        label: { en: 'OTP Input', fr: 'Entrée OTP' },
+        icon: 'input',
+        customSettingsPropertiesOrder: [
+            'formInfobox',
+            ['fieldName', 'customValidation', 'validation'],
+            'format',
+            'type',
+            'value',
+            'autoFocus',
+            'autoSubmit',
+            'required',
+            'readonly',
+            'disabled',
+        ],
+        customStylePropertiesOrder: [
+            [
+                'gap',
+                'fieldWidth',
+                'fieldHeight',
+            ],
+            [
+                'borderRadius',
+                'borderWidth',
+                'borderColor',
+                'borderColorFocus',
+                'backgroundColor',
+            ],
+            [
+                'textAlign',
+                'fontFamily',
+                'fontSize',
+                'fontWeight',
+                'color',
+                'displayPlaceholder',
+                'placeholderChar',
+                'placeholderColor',
+                'maskInput',
+                'maskCharacter',
+                'maskColor',
+            ],
+            [
+                'separatorType',
+                'separatorChar',
+                'separatorIcon',
+                'separatorColor',
+                'separatorSize',
+            ],
+        ],
+    },
+    states: ['focus', 'readonly', 'disabled', 'error', 'complete'],
+    actions: [
+        { label: 'Focus first field', action: 'focus' },
+        { label: 'Clear all fields', action: 'clear' },
+        { label: 'Set value', action: 'setValue', args: [{ name: 'value', type: 'string' }] },
+    ],
+    triggerEvents: [
+        { name: 'change', label: { en: 'On change' }, event: { value: '' }, default: true },
+        { name: 'complete', label: { en: 'On complete' }, event: { value: '' } },
+        { name: 'focus', label: { en: 'On focus' }, event: null },
+        { name: 'blur', label: { en: 'On blur' }, event: null },
+        { name: 'clear', label: { en: 'On clear' }, event: null },
+    ],
+    properties: {
+        /* wwEditor:start */
+        form: {
+            editorOnly: true,
+            hidden: true,
+            defaultValue: false,
+        },
+        formInfobox: {
+            type: 'InfoBox',
+            section: 'settings',
+            options: (_, sidePanelContent) => ({
+                variant: sidePanelContent.form?.name ? 'success' : 'warning',
+                icon: 'pencil',
+                title: sidePanelContent.form?.name || 'Unnamed form',
+                content: !sidePanelContent.form?.name && 'Give your form a meaningful name.',
+            }),
+            hidden: (_, sidePanelContent) => {
+                return !sidePanelContent.form;
+            },
+        },
+        /* wwEditor:end */
+        fieldName: {
+            label: 'Field name',
+            section: 'settings',
+            type: 'Text',
+            defaultValue: '',
+            bindable: true,
+            hidden: (_, sidePanelContent) => {
+                return !sidePanelContent.form?.uid;
+            },
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A string that defines the field name: `"otp_code"`',
+            },
+            /* wwEditor:end */
+        },
+        customValidation: {
+            label: 'Custom validation',
+            section: 'settings',
+            type: 'OnOff',
+            defaultValue: false,
+            bindable: true,
+            hidden: (_, sidePanelContent) => {
+                return !sidePanelContent.form?.uid;
+            },
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean value',
+            },
+            /* wwEditor:end */
+        },
+        validation: {
+            label: 'Validation',
+            section: 'settings',
+            type: 'Formula',
+            defaultValue: '',
+            bindable: false,
+            hidden: (content, sidePanelContent) => {
+                return !sidePanelContent.form?.uid || !content.customValidation;
+            },
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean formula for validation',
+            },
+            /* wwEditor:end */
+        },
+        format: {
+            label: { en: 'Format', fr: 'Format' },
+            type: 'Text',
+            section: 'settings',
+            defaultValue: 'xxxxxx',
+            placeholder: 'xx-xx-xx',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A format string like "xx-xx-xx" where x represents input fields',
+            },
+            propertyHelp: {
+                tooltip: 'Define the OTP pattern. Use "x" for input fields and any other character as a separator. Examples: "xxxxxx", "xxx-xxx", "xx xx xx"',
+            },
+            /* wwEditor:end */
+        },
+        type: {
+            label: { en: 'Input type', fr: 'Type d\'entrée' },
+            type: 'TextSelect',
+            section: 'settings',
+            options: {
+                options: [
+                    { value: 'numeric', label: { en: 'Numeric', fr: 'Numérique' } },
+                    { value: 'alphanumeric', label: { en: 'Alphanumeric', fr: 'Alphanumérique' } },
+                ],
+            },
+            defaultValue: 'numeric',
+            /* wwEditor:start */
+            propertyHelp: {
+                tooltip: 'Define the accepted character types',
+            },
+            /* wwEditor:end */
+        },
+        value: {
+            label: { en: 'Init value', fr: 'Valeur initiale' },
+            type: 'Text',
+            section: 'settings',
+            bindable: true,
+            defaultValue: '',
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A string value like "123456"',
+            },
+            propertyHelp: {
+                tooltip: 'Initial value for the slots (trimmed to the number of x in Format)',
+            },
+            /* wwEditor:end */
+        },
+        autoFocus: {
+            label: { en: 'Auto focus', fr: 'Focus automatique' },
+            type: 'OnOff',
+            section: 'settings',
+            defaultValue: true,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Focuses the first empty slot on load',
+            },
+            /* wwEditor:end */
+        },
+        autoSubmit: {
+            label: { en: 'Auto submit', fr: 'Soumission automatique' },
+            type: 'OnOff',
+            section: 'settings',
+            defaultValue: false,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Submits the form automatically when all slots are filled (if inside Form Container)',
+            },
+            /* wwEditor:end */
+        },
+        required: {
+            label: { en: 'Required', fr: 'Requis' },
+            type: 'OnOff',
+            section: 'settings',
+            defaultValue: false,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Requires all slots to be filled (if inside Form Container)',
+            },
+            /* wwEditor:end */
+        },
+        readonly: {
+            label: { en: 'Read only', fr: 'Lecture seule' },
+            type: 'OnOff',
+            section: 'settings',
+            defaultValue: false,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Prevents editing the fields',
+            },
+            /* wwEditor:end */
+        },
+        disabled: {
+            label: { en: 'Disabled', fr: 'Désactivé' },
+            type: 'OnOff',
+            section: 'settings',
+            defaultValue: false,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Disables the fields',
+            },
+            /* wwEditor:end */
+        },
+        gap: {
+            label: { en: 'Gap', fr: 'Écart' },
+            type: 'Length',
+            options: {
+                unitChoices: [{ value: 'px', label: 'px', min: 0, max: 50 }],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '8px',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A length value like "8px"',
+            },
+            propertyHelp: {
+                tooltip: 'Space between fields and separators',
+            },
+            /* wwEditor:end */
+        },
+        fieldWidth: {
+            label: { en: 'Field width', fr: 'Largeur du champ' },
+            type: 'Length',
+            options: {
+                unitChoices: [
+                    { value: 'px', label: 'px', min: 20, max: 100 },
+                    { value: 'em', label: 'em', min: 1, max: 10 },
+                ],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '40px',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A length value like "40px"',
+            },
+            propertyHelp: {
+                tooltip: 'Width of each field',
+            },
+            /* wwEditor:end */
+        },
+        fieldHeight: {
+            label: { en: 'Field height', fr: 'Hauteur du champ' },
+            type: 'Length',
+            options: {
+                unitChoices: [
+                    { value: 'px', label: 'px', min: 20, max: 100 },
+                    { value: 'em', label: 'em', min: 1, max: 10 },
+                ],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '40px',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A length value like "40px"',
+            },
+            propertyHelp: {
+                tooltip: 'Height of each field',
+            },
+            /* wwEditor:end */
+        },
+        borderRadius: {
+            label: { en: 'Border radius', fr: 'Rayon de bordure' },
+            type: 'Length',
+            options: {
+                unitChoices: [{ value: 'px', label: 'px', min: 0, max: 50 }],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '4px',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A length value like "4px"',
+            },
+            propertyHelp: {
+                tooltip: 'Corner roundness of fields',
+            },
+            /* wwEditor:end */
+        },
+        borderWidth: {
+            label: { en: 'Border width', fr: 'Largeur de bordure' },
+            type: 'Length',
+            options: {
+                unitChoices: [{ value: 'px', label: 'px', min: 0, max: 10 }],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '1px',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A length value like "1px"',
+            },
+            propertyHelp: {
+                tooltip: 'Border thickness of fields',
+            },
+            /* wwEditor:end */
+        },
+        borderColor: {
+            label: { en: 'Border color', fr: 'Couleur de bordure' },
+            type: 'Color',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '#cccccc',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#cccccc"',
+            },
+            propertyHelp: {
+                tooltip: 'Default border color of fields',
+            },
+            /* wwEditor:end */
+        },
+        borderColorFocus: {
+            label: { en: 'Border color (focus)', fr: 'Couleur de bordure (focus)' },
+            type: 'Color',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '#3b82f6',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#3b82f6"',
+            },
+            propertyHelp: {
+                tooltip: 'Border color when a field is focused',
+            },
+            /* wwEditor:end */
+        },
+        backgroundColor: {
+            label: { en: 'Background color', fr: 'Couleur de fond' },
+            type: 'Color',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '#ffffff',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#ffffff"',
+            },
+            propertyHelp: {
+                tooltip: 'Background color of fields',
+            },
+            /* wwEditor:end */
+        },
+        textAlign: {
+            label: { en: 'Text align', fr: 'Alignement du texte' },
+            type: 'TextRadioGroup',
+            options: {
+                choices: [
+                    { value: 'left', icon: 'align-left' },
+                    { value: 'center', icon: 'align-middle' },
+                    { value: 'right', icon: 'align-right' },
+                ],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: 'center',
+            /* wwEditor:start */
+            propertyHelp: {
+                tooltip: 'Alignment of characters inside fields',
+            },
+            /* wwEditor:end */
+        },
+        fontFamily: {
+            label: { en: 'Font family', fr: 'Police' },
+            type: 'FontFamily',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A font family name',
+            },
+            propertyHelp: {
+                tooltip: 'Font for field text',
+            },
+            /* wwEditor:end */
+        },
+        fontSize: {
+            label: { en: 'Font size', fr: 'Taille de police' },
+            type: 'Length',
+            options: {
+                unitChoices: [
+                    { value: 'px', label: 'px', min: 8, max: 48 },
+                    { value: 'em', label: 'em', min: 0.5, max: 3 },
+                ],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '18px',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A length value like "18px"',
+            },
+            propertyHelp: {
+                tooltip: 'Size of field text',
+            },
+            /* wwEditor:end */
+        },
+        fontWeight: {
+            label: { en: 'Font weight', fr: 'Graisse de police' },
+            type: 'TextSelect',
+            options: {
+                options: [
+                    { value: null, label: 'Default' },
+                    { value: 100, label: '100 - Thin' },
+                    { value: 200, label: '200 - Extra Light' },
+                    { value: 300, label: '300 - Light' },
+                    { value: 400, label: '400 - Normal' },
+                    { value: 500, label: '500 - Medium' },
+                    { value: 600, label: '600 - Semi Bold' },
+                    { value: 700, label: '700 - Bold' },
+                    { value: 800, label: '800 - Extra Bold' },
+                    { value: 900, label: '900 - Black' },
+                ],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: 500,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'number',
+                tooltip: 'A number between 100 and 900',
+            },
+            propertyHelp: {
+                tooltip: 'Weight of field text',
+            },
+            /* wwEditor:end */
+        },
+        color: {
+            label: { en: 'Text color', fr: 'Couleur du texte' },
+            type: 'Color',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '#000000',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#000000"',
+            },
+            propertyHelp: {
+                tooltip: 'Color of field text',
+            },
+            /* wwEditor:end */
+        },
+        placeholderChar: {
+            label: { en: 'Placeholder', fr: 'Caractère de remplacement' },
+            type: 'Text',
+            defaultValue: '·',
+            hidden: content => !content.displayPlaceholder,
+            bindable: true,
+            classes: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A single character like "•"',
+            },
+            propertyHelp: {
+                tooltip: 'Placeholder character shown in empty fields',
+            },
+            /* wwEditor:end */
+        },
+        placeholderColor: {
+            label: { en: 'Placeholder color', fr: 'Couleur du placeholder' },
+            type: 'Color',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '#999999',
+            hidden: content => !content.displayPlaceholder,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#999999"',
+            },
+            propertyHelp: {
+                tooltip: 'Color of placeholder characters',
+            },
+            /* wwEditor:end */
+        },
+        maskInput: {
+            label: { en: 'Mask input', fr: 'Masquer l\'entrée' },
+            type: 'OnOff',
+            defaultValue: false,
+            bindable: true,
+            classes: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'A boolean value',
+            },
+            propertyHelp: {
+                tooltip: 'Hides entered characters using a mask',
+            },
+            /* wwEditor:end */
+        },
+        maskCharacter: {
+            label: { en: 'Mask character', fr: 'Caractère de masquage' },
+            type: 'Text',
+            defaultValue: '·',
+            hidden: content => !content.maskInput,
+            bindable: true,
+            classes: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A single character like "•"',
+            },
+            propertyHelp: {
+                tooltip: 'Character used for masking',
+            },
+            /* wwEditor:end */
+        },
+        maskColor: {
+            label: { en: 'Mask color', fr: 'Couleur du masquage' },
+            type: 'Color',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '#000000',
+            hidden: content => !content.maskInput,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#000000"',
+            },
+            propertyHelp: {
+                tooltip: 'Color of masked characters',
+            },
+            /* wwEditor:end */
+        },
+        displayPlaceholder: {
+            label: { en: 'Display placeholder', fr: 'Afficher le placeholder' },
+            type: 'OnOff',
+            defaultValue: true,
+            bindable: true,
+            classes: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'Whether to show placeholder in empty fields',
+            },
+            propertyHelp: {
+                tooltip: 'Shows placeholder characters in empty fields',
+            },
+            /* wwEditor:end */
+        },
+        separatorType: {
+            label: { en: 'Separator type', fr: 'Type de séparateur' },
+            type: 'TextSelect',
+            options: {
+                options: [
+                    { value: 'none', label: { en: 'None', fr: 'Aucun' } },
+                    { value: 'character', label: { en: 'Character', fr: 'Caractère' } },
+                    { value: 'icon', label: { en: 'Icon', fr: 'Icône' } },
+                ],
+            },
+            defaultValue: 'character',
+            bindable: true,
+            classes: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'Either "none", "character", or "icon"',
+            },
+            propertyHelp: {
+                tooltip: 'Type of separator between groups',
+            },
+            /* wwEditor:end */
+        },
+        separatorChar: {
+            label: { en: 'Separator', fr: 'Séparateur' },
+            type: 'Text',
+            defaultValue: '-',
+            hidden: content => content.separatorType !== 'character',
+            bindable: true,
+            classes: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A separator character like "-"',
+            },
+            propertyHelp: {
+                tooltip: 'Separator character used when Separator type is character',
+            },
+            /* wwEditor:end */
+        },
+        separatorIcon: {
+            label: { en: 'Separator icon', fr: 'Icône de séparateur' },
+            type: 'SystemIcon',
+            hidden: content => content.separatorType !== 'icon',
+            bindable: true,
+            defaultValue: 'lucide/separator-vertical',
+            classes: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'An icon name for the separator',
+            },
+            propertyHelp: {
+                tooltip: 'Icon used when the Separator type is icon',
+            },
+            /* wwEditor:end */
+        },
+        separatorColor: {
+            label: { en: 'Separator color', fr: 'Couleur du séparateur' },
+            type: 'Color',
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '#000000',
+            hidden: content => content.separatorType === 'none',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A color value like "#000000"',
+            },
+            propertyHelp: {
+                tooltip: 'Color of separators',
+            },
+            /* wwEditor:end */
+        },
+        separatorSize: {
+            label: { en: 'Separator size', fr: 'Taille du séparateur' },
+            type: 'Length',
+            options: {
+                unitChoices: [
+                    { value: 'px', label: 'px', min: 8, max: 48 },
+                    { value: 'em', label: 'em', min: 0.5, max: 3 },
+                ],
+            },
+            responsive: true,
+            states: true,
+            classes: true,
+            defaultValue: '18px',
+            hidden: content => content.separatorType === 'none',
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'string',
+                tooltip: 'A length value like "18px"',
+            },
+            propertyHelp: {
+                tooltip: 'Size of separators',
+            },
+            /* wwEditor:end */
+        },
+    },
+};
