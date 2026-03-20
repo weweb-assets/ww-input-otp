@@ -62,11 +62,11 @@ export default {
         { label: 'Set value', action: 'setValue', args: [{ name: 'value', type: 'string' }] },
     ],
     triggerEvents: [
-        { name: 'change', label: { en: 'On change' }, event: { value: '' }, default: true },
-        { name: 'complete', label: { en: 'On complete' }, event: { value: '' } },
-        { name: 'focus', label: { en: 'On focus' }, event: null },
-        { name: 'blur', label: { en: 'On blur' }, event: null },
-        { name: 'clear', label: { en: 'On clear' }, event: null },
+        { name: 'change', label: { en: 'On change' }, event: { value: '' }, default: true, description: "Run when the value changes." },
+        { name: 'complete', label: { en: 'On complete' }, event: { value: '' }, description: "Run when input is fully completed." },
+        { name: 'focus', label: { en: 'On focus' }, event: null, description: "Run when the input becomes active (for example, when clicked)." },
+        { name: 'blur', label: { en: 'On blur' }, event: null, description: "Run when the input stops being active." },
+        { name: 'clear', label: { en: 'On clear' }, event: null, description: "Run when the current value is cleared." },
     ],
     properties: {
         /* wwEditor:start */
