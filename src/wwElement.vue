@@ -34,8 +34,13 @@
         class="ww-input-otp__separator"
         :style="separatorStyles"
       >
-        <span v-if="content.separatorType === 'character'">{{ separatorContent }}</span>
-        <span v-else-if="content.separatorType === 'icon'" v-html="separatorContent"></span>
+        <span v-if="content.separatorType === 'character'">{{
+          separatorContent
+        }}</span>
+        <span
+          v-else-if="content.separatorType === 'icon'"
+          v-html="separatorContent"
+        ></span>
       </div>
     </template>
   </div>
@@ -64,11 +69,13 @@ export default {
     // Check if in editor mode
     const isEditing = computed(() => {
       /* wwEditor:start */
-      return props.wwEditorState.editMode === wwLib.wwEditorHelper.EDIT_MODES.EDITION;
+      return (
+        props.wwEditorState.editMode === wwLib.wwEditorHelper.EDIT_MODES.EDITION
+      );
       /* wwEditor:end */
       return false;
     });
-    
+
     // OTP Input state and logic
     const inputRefs = ref([]);
     const focusedIndex = ref(null);
@@ -94,7 +101,7 @@ export default {
 
     // Initialize value based on format length
     const defaultValue = computed(() => {
-      const initValue = props.content?.value || "";
+      const initValue = String(props.content?.value ?? "");
       const totalFields = formatInfo.value.totalFields;
       return initValue.padEnd(totalFields, "").slice(0, totalFields);
     });
@@ -107,25 +114,31 @@ export default {
         type: "string",
         defaultValue,
       });
-    
+
     // Create formatted value with separators
     const formattedValueComputed = computed(() => {
       const format = props.content?.format || "xxxxxx";
       const value = otpValue.value || "";
-      
+
       if (!value) return "";
-      
+
       let formatted = "";
       let valueIndex = 0;
-      
+
       for (let i = 0; i < format.length && valueIndex < value.length; i++) {
         if (format[i] === "x" || format[i] === "X") {
           // Add the next character from value
           formatted += value[valueIndex];
           valueIndex++;
-          
+
           // Check if we should add a separator after this character
-          if (valueIndex < value.length && i + 1 < format.length && format[i + 1] !== "x" && format[i + 1] !== "X" && props.content?.separatorType !== "none") {
+          if (
+            valueIndex < value.length &&
+            i + 1 < format.length &&
+            format[i + 1] !== "x" &&
+            format[i + 1] !== "X" &&
+            props.content?.separatorType !== "none"
+          ) {
             // Next position in format is a separator and we have more characters to add
             if (props.content?.separatorType === "character") {
               formatted += props.content?.separatorChar || format[i + 1];
@@ -138,10 +151,10 @@ export default {
           }
         }
       }
-      
+
       return formatted;
     });
-    
+
     // Create component variable for formatted value (read-only)
     const { value: formattedValue, setValue: setFormattedValue } =
       wwLib.wwVariable.useComponentVariable({
@@ -151,7 +164,7 @@ export default {
         defaultValue: formattedValueComputed,
         readonly: true,
       });
-    
+
     // Keep formatted value in sync
     watch(formattedValueComputed, (newValue) => {
       setFormattedValue(newValue);
@@ -169,30 +182,34 @@ export default {
       const value = otpValue.value || "";
       return formatInfo.value.fields.map((field) => value[field.index] || "");
     });
-    
+
     // Keep track of actual values for masking
-    watch(fieldValues, (newValues) => {
-      actualValues.value = [...newValues];
-    }, { immediate: true });
-    
+    watch(
+      fieldValues,
+      (newValues) => {
+        actualValues.value = [...newValues];
+      },
+      { immediate: true },
+    );
+
     // Compute display values based on masking settings
     const displayValues = computed(() => {
       if (!props.content?.maskInput) {
         return fieldValues.value;
       }
-      
+
       // Use custom mask character if provided, otherwise use default
-      const maskChar = props.content?.maskCharacter || '·';
-      
+      const maskChar = props.content?.maskCharacter || "·";
+
       return fieldValues.value.map((value, index) => {
         // Don't mask the field that's currently being typed
-        if (focusedIndex.value === index && value === '') {
-          return '';
+        if (focusedIndex.value === index && value === "") {
+          return "";
         }
-        return value ? maskChar : '';
+        return value ? maskChar : "";
       });
     });
-    
+
     // Determine if placeholder should be shown
     const shouldShowPlaceholder = computed(() => {
       return props.content?.displayPlaceholder !== false;
@@ -253,7 +270,7 @@ export default {
     const validation = computed(() => props.content?.validation);
     const customValidation = computed(() => props.content?.customValidation);
     const required = computed(() => props.content?.required);
-    
+
     // Custom required validation for OTP - checks if all fields are complete
     const requiredValidation = (value) => {
       // For OTP, required means all fields must be filled
@@ -274,21 +291,21 @@ export default {
 
     // Track if focus is programmatic
     let isProgrammaticFocus = false;
-    
+
     // Handler functions
     function handleInput(index, event) {
       const inputValue = event.target.value;
-      
+
       // For masked input, we need to handle the input differently
       if (props.content?.maskInput) {
         // If it's a mask character, ignore it
-        const maskChar = props.content?.maskCharacter || '·';
+        const maskChar = props.content?.maskCharacter || "·";
         if (inputValue === maskChar) {
           event.target.value = displayValues.value[index];
           return;
         }
       }
-      
+
       const char = inputValue.slice(-1); // Get last character
 
       // Validate input based on type
@@ -303,7 +320,7 @@ export default {
 
       // Find the first empty field
       const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
-      
+
       // If we're at the last field or typing in a filled field, and there's an empty field before
       if (firstEmptyIndex !== -1 && firstEmptyIndex < index) {
         // Update the first empty field instead
@@ -311,20 +328,20 @@ export default {
         newValues[firstEmptyIndex] = char;
         const newOtpValue = newValues.join("");
         setOtpValue(newOtpValue);
-        
+
         // Clear the current field's display
         event.target.value = displayValues.value[index];
-        
+
         // Move focus to the next empty field
         const nextEmptyIndex = newValues.findIndex((val) => val === "");
-        
+
         if (nextEmptyIndex !== -1) {
           focusField(nextEmptyIndex);
         }
-        
+
         // Emit change event
         emitChange(newOtpValue);
-        
+
         // Check for completion
         if (newValues.every((val) => val !== "")) {
           emit("trigger-event", {
@@ -340,7 +357,7 @@ export default {
             });
           }
         }
-        
+
         return;
       }
 
@@ -466,7 +483,7 @@ export default {
     function focusField(index) {
       // Set flag to prevent focus event trigger
       isProgrammaticFocus = true;
-      
+
       nextTick(() => {
         const input = inputRefs.value[index];
         if (input) {
@@ -480,15 +497,19 @@ export default {
     function handleFocus(index) {
       // Find the first empty field
       const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
-      
+
       // If there's an empty field and it's not the current field, redirect focus
-      if (firstEmptyIndex !== -1 && firstEmptyIndex !== index && !isProgrammaticFocus) {
+      if (
+        firstEmptyIndex !== -1 &&
+        firstEmptyIndex !== index &&
+        !isProgrammaticFocus
+      ) {
         focusField(firstEmptyIndex);
         return;
       }
-      
+
       focusedIndex.value = index;
-      
+
       // Only trigger focus event if it's not programmatic
       if (!isProgrammaticFocus) {
         emit("trigger-event", { name: "focus" });
@@ -496,7 +517,7 @@ export default {
         // Reset the flag immediately after skipping the trigger
         isProgrammaticFocus = false;
       }
-      
+
       emit("add-state", "focus");
     }
 
@@ -524,12 +545,12 @@ export default {
     function focus() {
       const firstEmptyIndex = fieldValues.value.findIndex((val) => val === "");
       const targetIndex = firstEmptyIndex !== -1 ? firstEmptyIndex : 0;
-      
+
       // Don't focus if already focused on the target field
       if (focusedIndex.value === targetIndex) {
         return;
       }
-      
+
       focusField(targetIndex);
     }
 
@@ -555,7 +576,7 @@ export default {
         });
       }
     });
-    
+
     // Watch for editor mode changes to handle auto-focus
     /* wwEditor:start */
     watch(isEditing, (newIsEditing, oldIsEditing) => {
@@ -577,13 +598,17 @@ export default {
       }
     });
 
-    watch(isValid, (valid) => {
-      if (!valid) {
-        emit("add-state", "error");
-      } else {
-        emit("remove-state", "error");
-      }
-    }, { immediate: true });
+    watch(
+      isValid,
+      (valid) => {
+        if (!valid) {
+          emit("add-state", "error");
+        } else {
+          emit("remove-state", "error");
+        }
+      },
+      { immediate: true },
+    );
 
     watch(
       () => props.content?.readonly,
@@ -714,7 +739,7 @@ export default {
       }
       return props.content?.borderColor || "#cccccc";
     }
-    
+
     // Helper function to get text color based on masking
     function getMaskColor(index) {
       if (props.content?.maskInput && fieldValues.value[index]) {
@@ -774,7 +799,7 @@ The current OTP value without separators
 #### formattedValue
 The OTP value with separators included (e.g., "123-456")
 
-#### isComplete  
+#### isComplete
 Boolean indicating if all fields are filled
 
 #### isValid
@@ -851,7 +876,6 @@ Boolean indicating if any field is currently focused
       opacity: 1;
       line-height: normal;
     }
-
 
     /* Remove spinner buttons */
     &::-webkit-outer-spin-button,
