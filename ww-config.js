@@ -55,7 +55,13 @@ export default {
             ],
         ],
     },
-    states: ['focus', 'readonly', 'disabled', 'error', 'complete'],
+    states: [
+        { label: 'focus', selector: '&:focus-within' },
+        { label: 'readonly', selector: '&:has(input:read-only)' },
+        { label: 'disabled', selector: '&:has(input:disabled)' },
+        'error',
+        'complete',
+    ],
     actions: [
         { label: 'Focus first field', action: 'focus' },
         { label: 'Clear all fields', action: 'clear' },

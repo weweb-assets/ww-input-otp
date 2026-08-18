@@ -518,7 +518,6 @@ export default {
         isProgrammaticFocus = false;
       }
 
-      emit("add-state", "focus");
     }
 
     // Handle blur events
@@ -531,7 +530,6 @@ export default {
         if (!stillFocused) {
           focusedIndex.value = null;
           emit("trigger-event", { name: "blur" });
-          emit("remove-state", "focus");
         }
       });
     }
@@ -605,30 +603,6 @@ export default {
           emit("add-state", "error");
         } else {
           emit("remove-state", "error");
-        }
-      },
-      { immediate: true },
-    );
-
-    watch(
-      () => props.content?.readonly,
-      (readonly) => {
-        if (readonly) {
-          emit("add-state", "readonly");
-        } else {
-          emit("remove-state", "readonly");
-        }
-      },
-      { immediate: true },
-    );
-
-    watch(
-      () => props.content?.disabled,
-      (disabled) => {
-        if (disabled) {
-          emit("add-state", "disabled");
-        } else {
-          emit("remove-state", "disabled");
         }
       },
       { immediate: true },
